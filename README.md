@@ -22,14 +22,15 @@ itself calls for.
 | [`travel-podcast`](skills/travel-podcast/) | Turns any place into a self-contained HTML audio guide, narrated by the browser, with separate scripts for adults, teenagers and children | 🇮🇹 Italian | nothing |
 | [`external-interviews`](skills/external-interviews/) | When a task needs an answer only an outside person can give, opens a link-based conversation with them instead of guessing or stalling | 🇬🇧 English | [interviews MCP](https://interviews.oiarplatform.com) |
 | [`post-idea`](skills/post-idea/) | Reads your RSS and newsletter digest, and proposes 3-4 LinkedIn post angles worth writing — then writes the one you pick | 🇮🇹 Italian | [feedandpost.it MCP](https://feedandpost.it) |
+| [`llm-conversation-gif`](skills/llm-conversation-gif/) | Renders a fake coding-agent session as an animated GIF for social posts — the typed prompt on top, the agent's output scrolling below, optionally beside what it is *really* thinking | 🇮🇹 Italian | Python + Pillow, gifsicle |
 
 Two of these depend on an MCP connector, noted in the table and explained in full at the top of
 each `SKILL.md`. Each skill stops and says so when its connector is missing, rather than
 inventing output — worth knowing before you install one.
 
-`travel-podcast` and `post-idea` are written in Italian, because that is the language they
-produce. Translating the instructions without translating the output would be worse than
-leaving them as they are.
+`travel-podcast`, `post-idea` and `llm-conversation-gif` are written in Italian, because that is
+the language they produce. Translating the instructions without translating the output would be
+worse than leaving them as they are.
 
 ## Custom instructions
 
