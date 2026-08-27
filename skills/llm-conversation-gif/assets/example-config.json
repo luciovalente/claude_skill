@@ -1,0 +1,21 @@
+{
+  "mode": "double",
+  "user_prompt": "Vorrei realizzare il mio CRM per gestire i miei 4 clienti, perché i software attuali non sono fatti bene",
+  "steps": [
+    {
+      "action": "Preparo l'ambiente di sviluppo...",
+      "thought": "ecco un altro CEO visionario. Deve gestire 4 contatti.. e gli serve un CRM.. custom..",
+      "commands": 7
+    },
+    {
+      "action": "Configuro il database PostgreSQL...",
+      "thought": "un database... PostgreSQL!!! Per 4 righe. Andava bene anche un post-it sul monitor",
+      "commands": 6
+    },
+    {
+      "action": "Fatto! Il tuo CRM è pronto",
+      "thought": "fra 1 settimana non si ricorderà nemmeno più dove è stato deployato e come ci si accede..",
+      "commands": 2
+    }
+  ]
+}
