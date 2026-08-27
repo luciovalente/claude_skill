@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>{{LUOGO}} — Travel Podcast</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 20%, #2b2318, #0f0c08 70%);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #e8dcc0;
+    padding: 24px;
+  }
+  .card {
+    max-width: 600px;
+    width: 100%;
+    background: linear-gradient(180deg, #1a140c, #100c07);
+    border: 1px solid #4a3c22;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  h1 {
+    font-size: 1.5rem;
+    margin: 0 0 4px;
+    color: #d9b76a;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    color: #8a7a58;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .modes {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .modes button {
+    flex: 1;
+    min-width: 100px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #4a3c22;
+    background: #191307;
+    color: #b8a878;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .modes button.active {
+    background: #7a5a20;
+    border-color: #a37c30;
+    color: #1a1408;
+    font-weight: bold;
+  }
+  .modes button:hover:not(.active) { background: #241c10; }
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  button.ctrl {
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 10px 18px;
+    border-radius: 30px;
+    border: 1px solid #6b5a30;
+    background: #2a2114;
+    color: #e8dcc0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  button.ctrl:hover { background: #3a2e18; }
+  button.ctrl:active { transform: scale(0.97); }
+  button.primary {
+    background: #7a5a20;
+    border-color: #a37c30;
+    color: #1a1408;
+    font-weight: bold;
+  }
+  button.primary:hover { background: #8f6a28; }
+  button.ctrl:disabled { opacity: 0.4; cursor: not-allowed; }
+  .status {
+    font-size: 0.8rem;
+    color: #8a7a58;
+    margin-bottom: 16px;
+    min-height: 18px;
+  }
+  .chapters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .chapters button {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+    border-radius: 14px;
+    background: #191307;
+    border: 1px solid #4a3c22;
+    color: #e8dcc0;
+    cursor: pointer;
+  }
+  .chapters button.active {
+    background: #7a5a20;
+    color: #1a1408;
+  }
+  .script {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  .script h3 {
+    color: #c9a45c;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 22px 0 8px;
+  }
+  .script h3:first-child { margin-top: 0; }
+  .script p { margin: 0 0 14px; }
+  .script span.reading {
+    background: #7a5a20;
+    color: #1a1408;
+    border-radius: 3px;
+  }
+  .script::-webkit-scrollbar { width: 6px; }
+  .script::-webkit-scrollbar-thumb { background: #4a3c22; border-radius: 3px; }
+  .divider {
+    border: none;
+    border-top: 1px solid #3a2e18;
+    margin: 20px 0;
+  }
+  select {
+    font-family: inherit;
+    font-size: 0.8rem;
+    background: #2a2114;
+    color: #e8dcc0;
+    border: 1px solid #4a3c22;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-left: auto;
+  }
+  .hunt {
+    display: none;
+    background: #1f1810;
+    border: 1px dashed #6b5a30;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+  .hunt.visible { display: block; }
+  .hunt-title {
+    font-size: 0.95rem;
+    color: #d9b76a;
+    margin: 0 0 4px;
+    font-weight: bold;
+  }
+  .hunt-sub {
+    font-size: 0.78rem;
+    color: #8a7a58;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  .hunt-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #2a2114;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .hunt-item:last-child { border-bottom: none; }
+  .hunt-item input {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    accent-color: #a37c30;
+    flex-shrink: 0;
+  }
+  .hunt-item.done span { text-decoration: line-through; color: #7a6a48; }
+  .hunt-progress {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #8a7a58;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>{{ICON}} {{LUOGO}}</h1>
+  <div class="subtitle">{{SOTTOTITOLO}}</div>
+
+  <div class="modes" id="modes">
+    <button data-mode="avventuroso" class="active">🗡️ Avventuroso</button>
+    <button data-mode="bambini">🧒 Bambini</button>
+    <button data-mode="adulti">🧭 Adulti</button>
+  </div>
+
+  <div class="hunt" id="hunt">
+    <div class="hunt-title">🔍 Caccia al tesoro</div>
+    <div class="hunt-sub">Mentre ascolti, cerca queste cose intorno a te e spuntale!</div>
+    <div id="huntItems"></div>
+    <div class="hunt-progress" id="huntProgress"></div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl primary" id="playBtn">▶ Ascolta</button>
+    <button class="ctrl" id="pauseBtn" disabled>⏸ Pausa</button>
+    <button class="ctrl" id="stopBtn" disabled>⏹ Stop</button>
+    <select id="voiceSelect"></select>
+  </div>
+  <div class="chapters" id="chapters"></div>
+  <div class="status" id="status">Pronto per iniziare.</div>
+  <hr class="divider">
+  <div class="script" id="script"></div>
+</div>
+
+<script>
+// ============================================================
+// SCRIPTS: un oggetto per ogni modalità, ognuno con un array di capitoli
+// { titolo: "...", paragrafi: ["...", "..."] }
+// Questo blocco viene generato da Claude in base al luogo richiesto.
+// ============================================================
+const scriptsByMode = {
+  avventuroso: {{SCRIPT_AVVENTUROSO_JSON}},
+  bambini: {{SCRIPT_BAMBINI_JSON}},
+  adulti: {{SCRIPT_ADULTI_JSON}}
+};
+
+// Caccia al tesoro: mostrata solo in modalità bambini.
+// Array di stringhe, ognuna un oggetto/dettaglio REALMENTE presente nel luogo da cercare.
+const huntItems = {{HUNT_ITEMS_JSON}};
+
+let currentMode = 'avventuroso';
+let flatParagraphs = [];
+
+function buildFlatParagraphs(mode) {
+  const chapters = scriptsByMode[mode];
+  const flat = [];
+  chapters.forEach((ch) => {
+    ch.paragrafi.forEach((p, pIdx) => {
+      flat.push({ text: p, chapterTitle: ch.titolo, isFirstOfChapter: pIdx === 0 });
+    });
+  });
+  return { chapters, flat };
+}
+
+function renderScript(mode) {
+  const { chapters, flat } = buildFlatParagraphs(mode);
+  flatParagraphs = flat;
+
+  const scriptEl = document.getElementById('script');
+  scriptEl.innerHTML = flat.map((p, i) =>
+    (p.isFirstOfChapter ? `<h3>${p.chapterTitle}</h3>` : '') +
+    `<p data-idx="${i}">${p.text}</p>`
+  ).join('');
+
+  const chaptersEl = document.getElementById('chapters');
+  chaptersEl.innerHTML = chapters.map((ch, i) =>
+    `<button data-chapter="${i}">${i + 1}. ${ch.titolo}</button>`
+  ).join('');
+}
+
+renderScript(currentMode);
+
+function renderHunt() {
+  const huntItemsEl = document.getElementById('huntItems');
+  huntItemsEl.innerHTML = huntItems.map((item, i) =>
+    `<label class="hunt-item" data-hunt-idx="${i}">
+      <input type="checkbox" data-hunt-idx="${i}">
+      <span>${item}</span>
+    </label>`
+  ).join('');
+  updateHuntProgress();
+}
+
+function updateHuntProgress() {
+  const total = huntItems.length;
+  const checked = document.querySelectorAll('#huntItems input:checked').length;
+  document.getElementById('huntProgress').textContent = total ? `${checked} / ${total} trovati` : '';
+}
+
+function toggleHuntVisibility(mode) {
+  const huntEl = document.getElementById('hunt');
+  if (mode === 'bambini' && huntItems.length > 0) {
+    huntEl.classList.add('visible');
+  } else {
+    huntEl.classList.remove('visible');
+  }
+}
+
+renderHunt();
+toggleHuntVisibility(currentMode);
+
+document.getElementById('huntItems').addEventListener('change', (e) => {
+  if (e.target.type !== 'checkbox') return;
+  const label = e.target.closest('.hunt-item');
+  label.classList.toggle('done', e.target.checked);
+  updateHuntProgress();
+});
+const pauseBtn = document.getElementById('pauseBtn');
+const stopBtn = document.getElementById('stopBtn');
+const statusEl = document.getElementById('status');
+const voiceSelect = document.getElementById('voiceSelect');
+const modesEl = document.getElementById('modes');
+const chaptersEl = document.getElementById('chapters');
+
+let voices = [];
+let isPaused = false;
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('it'));
+  if (voices.length === 0) voices = speechSynthesis.getVoices();
+  voiceSelect.innerHTML = voices.map((v, i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
+}
+loadVoices();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function highlight(idx) {
+  document.querySelectorAll('.script p').forEach(p => p.classList.remove('reading'));
+  document.querySelectorAll('.chapters button').forEach(b => b.classList.remove('active'));
+  const el = document.querySelector(`.script p[data-idx="${idx}"]`);
+  if (el) {
+    el.classList.add('reading');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  const chapterTitle = flatParagraphs[idx].chapterTitle;
+  const chBtns = document.querySelectorAll('.chapters button');
+  chBtns.forEach(b => { if (b.textContent.includes(chapterTitle)) b.classList.add('active'); });
+}
+
+function speakFrom(idx) {
+  if (idx >= flatParagraphs.length) {
+    statusEl.textContent = "Fine del podcast. Buona visita! 🎧";
+    resetButtons();
+    return;
+  }
+  highlight(idx);
+  const utter = new SpeechSynthesisUtterance(flatParagraphs[idx].text);
+  const selected = voices[voiceSelect.value];
+  if (selected) utter.voice = selected;
+  utter.lang = selected ? selected.lang : 'it-IT';
+  utter.rate = 0.98;
+  utter.pitch = 1;
+
+  utter.onend = () => {
+    if (!isPaused) speakFrom(idx + 1);
+  };
+
+  statusEl.textContent = `In riproduzione — ${flatParagraphs[idx].chapterTitle} (${idx + 1}/${flatParagraphs.length})`;
+  speechSynthesis.speak(utter);
+}
+
+function resetButtons() {
+  playBtn.disabled = false;
+  pauseBtn.disabled = true;
+  stopBtn.disabled = true;
+  document.querySelectorAll('.script p').forEach(p => p.classList.remove('reading'));
+  document.querySelectorAll('.chapters button').forEach(b => b.classList.remove('active'));
+}
+
+function stopAndReset() {
+  speechSynthesis.cancel();
+  isPaused = false;
+  resetButtons();
+  statusEl.textContent = "Pronto per iniziare.";
+}
+
+playBtn.addEventListener('click', () => {
+  if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+  } else {
+    speechSynthesis.cancel();
+    speakFrom(0);
+  }
+  isPaused = false;
+  playBtn.disabled = true;
+  pauseBtn.disabled = false;
+  stopBtn.disabled = false;
+});
+
+pauseBtn.addEventListener('click', () => {
+  speechSynthesis.pause();
+  isPaused = true;
+  statusEl.textContent = "In pausa.";
+  playBtn.disabled = false;
+  pauseBtn.disabled = true;
+});
+
+stopBtn.addEventListener('click', () => {
+  stopAndReset();
+});
+
+chaptersEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-chapter]');
+  if (!btn) return;
+  const chIdx = parseInt(btn.dataset.chapter);
+  const chapters = scriptsByMode[currentMode];
+  let startIdx = 0;
+  for (let i = 0; i < chIdx; i++) startIdx += chapters[i].paragrafi.length;
+  speechSynthesis.cancel();
+  isPaused = false;
+  playBtn.disabled = true;
+  pauseBtn.disabled = false;
+  stopBtn.disabled = false;
+  speakFrom(startIdx);
+});
+
+modesEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-mode]');
+  if (!btn) return;
+  stopAndReset();
+  currentMode = btn.dataset.mode;
+  document.querySelectorAll('.modes button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScript(currentMode);
+  toggleHuntVisibility(currentMode);
+});
+</script>
+</body>
+</html>
