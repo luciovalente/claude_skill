@@ -35,9 +35,17 @@ leaving them as they are.
 
 [`instructions/`](instructions/) holds standing instructions — the rules that apply to *every*
 conversation, not just one task. A skill is a procedure that waits to be needed; a custom
-instruction is a preference that is always on. See
-[`instructions/README.md`](instructions/README.md) for the difference and for where each kind
-gets pasted.
+instruction is a preference that is always on.
+
+| Instruction | What it changes | Language |
+|---|---|---|
+| [`build-warning`](instructions/build-warning.md) | Before you build another thing, makes Claude ask whether the last thing found real users — a counterweight, not a veto | 🇮🇹 Italian |
+| [`anti-sycophancy`](instructions/anti-sycophancy.md) | No opening compliments, no automatic agreement, and objections raised unprompted rather than only when asked | 🇮🇹 Italian |
+
+These two are written to work together: the first asks an uncomfortable question, the second is
+what stops the answer from being waved through. See
+[`instructions/README.md`](instructions/README.md) for the format and for where each kind gets
+pasted.
 
 ## Installing a skill
 

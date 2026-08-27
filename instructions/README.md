@@ -13,23 +13,33 @@ Rough rule of thumb:
 
 ## Layout
 
-One Markdown file per instruction set, named after its scope:
+One Markdown file per instruction, named after **what it does** — the same rule as skills:
 
 ```
 instructions/
 ├── README.md
-├── personal.md         # account-level: applies to every conversation
-└── <project-name>.md   # project-level: applies inside one project
+├── build-warning.md
+└── anti-sycophancy.md
 ```
 
-Each file starts with a short header stating **where it is meant to be pasted** and **what it
-assumes**, so that someone reusing it knows whether it fits their setup:
+Not named after where it is pasted. Instructions get copied one at a time, and a file called
+`personal.md` holding four unrelated rules cannot be. Scope is declared in the header instead,
+so one file can be reused without dragging the rest along.
+
+Each file has a header stating **where it is meant to be pasted**, **what language it is written
+in**, and **what it assumes**, then a short note on what it actually does and what it costs.
+Then the instruction text itself, below a rule:
 
 ```markdown
 # <Name>
 
 **Scope:** account-level (Claude Settings → Personal preferences)
-**Assumes:** the reader works in Italian and ships production software
+**Language:** Italian
+**Assumes:** something about the reader that decides whether this fits them
+
+<a paragraph or two: what it changes, and what the trade-off is>
+
+---
 
 <the instruction text, verbatim>
 ```

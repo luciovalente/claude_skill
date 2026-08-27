@@ -124,4 +124,4 @@ restringere il campo: un punto preciso produce un'audioguida utile, una regione 
 
 ## Nota sull'estensione della skill
 
-Questa skill genera contenuto (script + HTML), non nuova infrastruttura. Se in futuro l'utente chiede di espandere la skill (es. aggiungere lingue, salvataggio audio, hosting condiviso), vale comunque la regola generale: chiedere prima se c'è già evidenza d'uso ricorrente prima di costruire.
+Questa skill genera contenuto (script + HTML), non nuova infrastruttura. Se in futuro l'utente chiede di espandere la skill (es. aggiungere lingue, salvataggio audio, hosting condiviso), vale comunque la regola generale: chiedere prima se c'è già evidenza d'uso ricorrente prima di costruire (vedi [`instructions/build-warning.md`](../../instructions/build-warning.md)).
